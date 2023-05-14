@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Grid from '@mui/material/Grid'
-
-import { Post } from '../components/Post';
-import { TagsBlock } from '../components/TagsBlock';
-import { CommentsBlock } from '../components/CommentsBlock';
+import { Post } from '../components';
+import { TagsBlock } from '../components';
+import { CommentsBlock } from '../components';
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
 export const Home = () => {
@@ -26,8 +25,8 @@ export const Home = () => {
     return (
         <>
             <Tabs style={ { marginBottom: 15 } } value={ 0 } aria-label="basic tabs example">
-                <Tab label="Новые"/>
-                <Tab label="Популярные"/>
+                <Tab label="New"/>
+                <Tab label="Popular"/>
             </Tabs>
             <Grid container spacing={ 4 }>
                 <Grid xs={ 8 } item>
@@ -35,6 +34,7 @@ export const Home = () => {
                         isPostLoading ?
                             ( <Post key={ index } isLoading={ true }/> ) :
                             ( <Post
+                                key={ index }
                                 id={ obj._id }
                                 title={ obj.title }
                                 imageUrl={ obj.imageUrl ? `http://localhost:4444${ obj.imageUrl }` : '' }
@@ -53,14 +53,14 @@ export const Home = () => {
                         items={ [
                             {
                                 user: {
-                                    fullName: 'Вася Пупкин',
+                                    fullName: 'Mike Jagger',
                                     avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
                                 },
-                                text: 'Это тестовый комментарий',
+                                text: 'Test comment',
                             },
                             {
                                 user: {
-                                    fullName: 'Иван Иванов',
+                                    fullName: 'Mr Smith',
                                     avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
                                 },
                                 text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',

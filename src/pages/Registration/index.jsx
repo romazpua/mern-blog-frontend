@@ -1,20 +1,18 @@
-import React from 'react';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-
-import styles from './Login.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAuth, fetchRegister, selectIsAuth } from '../../redux/slices/auth';
-import { useForm } from 'react-hook-form';
+import React from 'react'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Avatar from '@mui/material/Avatar'
+import styles from './Login.module.scss'
+import { useDispatch } from 'react-redux';
+import { fetchRegister } from '../../redux/slices/auth'
+import { useForm } from 'react-hook-form'
 
 export const Registration = () => {
 
-    const isAuth = useSelector( selectIsAuth )
     const dispatch = useDispatch()
-    const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm( {
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm( {
         defaultValues: {
             fullName: 'John Smith',
             email: 'johnsmith123@gmail.com',
@@ -76,5 +74,5 @@ export const Registration = () => {
                 </Button>
             </form>
         </Paper>
-    );
-};
+    )
+}

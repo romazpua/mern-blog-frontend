@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
@@ -8,11 +8,12 @@ import 'easymde/dist/easymde.min.css'
 import styles from './AddPost.module.scss'
 import { useSelector } from 'react-redux'
 import { selectIsAuth } from '../../redux/slices/auth'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import axios from '../../axios';
 
 export const AddPost = () => {
 
+    const { id } = useParams()
     const navigate = useNavigate()
     const isAuth = useSelector( selectIsAuth )
     const [ isLoading, setLoading ] = useState( false )
@@ -21,6 +22,8 @@ export const AddPost = () => {
     const [ tags, setTags ] = useState( '' )
     const [ imageUrl, setImageUrl ] = useState( '' )
     const inputFileRef = useRef( null )
+
+    const isEditing = !!id
 
     const handleChangeFile = async ( event ) => {
         try {
@@ -49,18 +52,37 @@ export const AddPost = () => {
             const fields = {
                 title,
                 imageUrl,
-                // tags: tags.split( ',' ),
                 tags,
                 text
             }
-            const { data } = await axios.post( '/posts', fields )
-            const id = data._id
-            navigate( `/posts/${ id }` )
+            const { data } = isEditing
+                ?
+                await axios.patch( `/posts/${ id }`, fields )
+                :
+                await axios.post( '/posts', fields )
+
+            const _id = isEditing ? id : data._id
+
+            navigate( `/posts/${ _id }` )
         } catch ( err ) {
             console.warn( err )
             alert( 'An error in the creation of the article' )
         }
     }
+
+    useEffect( () => {
+        if ( id ) {
+            axios.get( `/posts/${ id }` ).then( ( { data } ) => {
+                setTitle( data.title )
+                setText( data.text )
+                setImageUrl( data.imageUrl )
+                setTags( data.tags.join( ',' ) )
+            } ).catch( err => {
+                console.warn( err )
+                alert( 'Error in obtaining an article' )
+            } )
+        }
+    }, [] )
 
     const options = useMemo(
         () => ( {
@@ -119,7 +141,7 @@ export const AddPost = () => {
                 options={ options }/>
             <div className={ styles.buttons }>
                 <Button onClick={ onSubmit } size="large" variant="contained">
-                    Publish
+                    { isEditing ? 'Save' : 'Publish' }
                 </Button>
                 <a href="/">
                     <Button size="large">Cancel</Button>

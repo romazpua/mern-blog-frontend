@@ -1,10 +1,8 @@
-import React from "react";
-
-import styles from "./AddComment.module.scss";
-
-import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import React from "react"
+import styles from "./AddComment.module.scss"
+import TextField from "@mui/material/TextField"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
 
 export const Index = () => {
   return (
@@ -26,5 +24,5 @@ export const Index = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}

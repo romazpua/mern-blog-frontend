@@ -1,15 +1,17 @@
-import React from 'react';
-import clsx from 'clsx';
+import React from 'react'
+import clsx from 'clsx'
 import { Link } from 'react-router-dom'
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Clear'
 import EditIcon from '@mui/icons-material/Edit';
-import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined'
+import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 
-import styles from './Post.module.scss';
-import { UserInfo } from '../UserInfo';
-import { PostSkeleton } from './Skeleton';
+import styles from './Post.module.scss'
+import { UserInfo } from '../UserInfo'
+import { PostSkeleton } from './Skeleton'
+import { useDispatch } from 'react-redux';
+import { fetchRemovePost } from '../../redux/slices/posts';
 
 export const Post = ( {
                           id,
@@ -25,12 +27,20 @@ export const Post = ( {
                           isLoading,
                           isEditable,
                       } ) => {
+
+    const dispatch = useDispatch()
+
     if ( isLoading ) {
         return <PostSkeleton/>;
     }
 
     const onClickRemove = () => {
-    };
+        if ( window.confirm( 'Do you really want to delete the article?' ) ) {
+            dispatch( fetchRemovePost( id ) )
+        }
+    }
+
+    console.log( 'USER:', user )
 
     return (
         <div className={ clsx( styles.root, { [ styles.rootFull ]: isFullPost } ) }>

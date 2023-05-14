@@ -4,7 +4,7 @@ import { Post } from '../components'
 import { Index } from '../components'
 import { CommentsBlock } from '../components'
 import axios from '../axios';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'
 
 export const FullPost = () => {
 
@@ -33,7 +33,7 @@ export const FullPost = () => {
             <Post
                 id={ data._id }
                 title={ data.title }
-                imageUrl={ `http://localhost:4444${ data.imageUrl }` }
+                imageUrl={ data.imageUrl ? `http://localhost:4444${ data.imageUrl }` : '' }
                 user={ data.user }
                 createdAt={ data.createdAt }
                 viewsCount={ data.viewsCount }
@@ -46,14 +46,14 @@ export const FullPost = () => {
                 items={ [
                     {
                         user: {
-                            fullName: 'Вася Пупкин',
+                            fullName: 'Mick Jagger',
                             avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
                         },
-                        text: 'Это тестовый комментарий 555555',
+                        text: 'Surrounded by losers Misfits and boozers Hanging by your fingernails...'
                     },
                     {
                         user: {
-                            fullName: 'Иван Иванов',
+                            fullName: 'Mr Smith',
                             avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
                         },
                         text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
