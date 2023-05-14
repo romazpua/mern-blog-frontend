@@ -22,12 +22,12 @@ export const Header = () => {
             <Container maxWidth="lg">
                 <div className={ styles.inner }>
                     <Link className={ styles.logo } to="/">
-                        <div>ARCHAKOV BLOG</div>
+                        <div>ROMAN BLOG</div>
                     </Link>
                     <div className={ styles.buttons }>
                         { isAuth ? (
                             <>
-                                <Link to="/posts/create">
+                                <Link to="/add-post">
                                     <Button variant="contained">Write an article</Button>
                                 </Link>
                                 <Button onClick={ onClickLogout } variant="contained" color="error">
